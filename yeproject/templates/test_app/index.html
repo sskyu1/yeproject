@@ -1,0 +1,69 @@
+{% load plotly_dash %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covid19_Taiwan_DashBoard</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    {% load static %}
+    <link rel="icon" href="{% static 'images/bg_favicon.png' %}">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href=" {% static 'css/style.css' %} ">
+    </head>
+<body>
+    <!-- Main title container -->
+    <div class='container'> 
+        <div class="row"></div>
+        <div class="row"><h1>COVID-19 Taiwan Dashboard</h1></div>
+        <div class="row"></div>        
+    </div>
+    <!-- Introduction -->
+    <div class='intro'>
+        <p>Covid19 has impacted our life since 2020 in many aspects. As a Taiwanese citizen, we were lucky to survive the crisis in 2020. 
+            However, we were struck by Covid19 as well in 2021. In this project, we grabbed raw data from Taiwanese government and applied
+            data science tools to collect useful data. Finally, the information will be present to you using a web app as you see right now.
+            Hope we would never forget what Covid19 taught us and wish that normal days will soon be back.</p>
+    </div>
+    <div>
+        {% block body %}{{value}}{% endblock %}
+    </div>
+    <!-- First part demonstrates cases related statistics -->
+    <h2><strong>Cases Statistics</strong></h2>
+
+    <!-- Show total accumulated cases -->
+    <div class='total_stats'>
+        <h3>Total Covid-19 Cases Til Today</h3>
+        <p class = 'total_number' id='total_case_num'><strong>{{ total_case }}</strong></p>
+    </div>
+   
+    <!-- Below are plot section for cases statistics -->
+    <div class='plot_section'>
+        <div class='row'>            
+            <div class='col-s-12 col-lg-6 plot'>
+
+                <!-- Show positive cases according to county selected -->
+                <h3>Positive Cases Per Day by County</h3>
+                {%plotly_app name="CountyPlot" ratio=0.5%}
+            </div>           
+            <div class='col-s-12 col-lg-6 plot'>
+
+                <!-- Show positive cases by gender -->
+                <h3>Positive Cases Per Day By Gender</h3>
+                {{ daily_gender_plot|safe }}
+            </div>
+            <div class='col-s-12 col-lg-6 plot'>
+
+                <!-- Show total positive cases according to age group -->
+                <h3>Total Cases By Age Group</h3>
+                {{ total_age_plot|safe }}       
+            </div>
+            
+        </div>
+    </div>     
+</body>
+</html>

@@ -16,6 +16,11 @@ urlpatterns = [
     path("users/", include("yeproject.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
+    path("test_app/", include("yeproject.test_app.urls", namespace="test_app")),
+
+    # django_plotly_dash을 위해 등록
+    path('django_plotly_dash/', include('django_plotly_dash.urls')),
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
